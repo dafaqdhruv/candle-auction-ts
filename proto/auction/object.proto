@@ -1,0 +1,19 @@
+syntax = "proto3";
+package deepstack.auction.auction;
+
+option go_package = "github.com/deepstack/auction/x/auction/types";
+
+message Object {
+  uint64 id = 1;
+  string description = 2; 
+  string owner = 3; 
+  string value = 4; 
+  string prevOwnSign = 5; 
+  uint64 startBlockHeight = 6; 
+  uint64 endBlockHeight = 7; 
+  uint64 auctionDuration = 8; 
+  uint64 marginBlocks = 9; 
+  string highestBid = 10; 
+  string highestBidder = 11; 
+  string creator = 12;
+}

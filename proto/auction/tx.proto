@@ -1,13 +1,59 @@
 syntax = "proto3";
 package deepstack.auction.auction;
 
+import "auction/object.proto";
 // this line is used by starport scaffolding # proto/tx/import
 
 option go_package = "github.com/deepstack/auction/x/auction/types";
 
 // Msg defines the Msg service.
 service Msg {
-    // this line is used by starport scaffolding # proto/tx/rpc
+    rpc CreateObject(MsgCreateObject) returns (MsgCreateObjectResponse);
+  rpc UpdateObject(MsgUpdateObject) returns (MsgUpdateObjectResponse);
+  rpc DeleteObject(MsgDeleteObject) returns (MsgDeleteObjectResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
 }
+
+message MsgCreateObject {
+  string creator = 1;
+  string description = 2;
+  string owner = 3;
+  string value = 4;
+  string prevOwnSign = 5;
+  uint64 startBlockHeight = 6;
+  uint64 endBlockHeight = 7;
+  uint64 auctionDuration = 8;
+  uint64 marginBlocks = 9;
+  string highestBid = 10;
+  string highestBidder = 11;
+}
+
+message MsgCreateObjectResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateObject {
+  string creator = 1;
+  uint64 id = 2;
+  string description = 3;
+  string owner = 4;
+  string value = 5;
+  string prevOwnSign = 6;
+  uint64 startBlockHeight = 7;
+  uint64 endBlockHeight = 8;
+  uint64 auctionDuration = 9;
+  uint64 marginBlocks = 10;
+  string highestBid = 11;
+  string highestBidder = 12;
+}
+
+message MsgUpdateObjectResponse {}
+
+message MsgDeleteObject {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteObjectResponse {}
 
 // this line is used by starport scaffolding # proto/tx/message

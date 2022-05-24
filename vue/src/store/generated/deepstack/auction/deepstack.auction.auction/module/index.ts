@@ -4,9 +4,15 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
+import { MsgDeleteObject } from "./types/auction/tx";
+import { MsgCreateObject } from "./types/auction/tx";
+import { MsgUpdateObject } from "./types/auction/tx";
 
 
 const types = [
+  ["/deepstack.auction.auction.MsgDeleteObject", MsgDeleteObject],
+  ["/deepstack.auction.auction.MsgCreateObject", MsgCreateObject],
+  ["/deepstack.auction.auction.MsgUpdateObject", MsgUpdateObject],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -39,6 +45,9 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
+    msgDeleteObject: (data: MsgDeleteObject): EncodeObject => ({ typeUrl: "/deepstack.auction.auction.MsgDeleteObject", value: MsgDeleteObject.fromPartial( data ) }),
+    msgCreateObject: (data: MsgCreateObject): EncodeObject => ({ typeUrl: "/deepstack.auction.auction.MsgCreateObject", value: MsgCreateObject.fromPartial( data ) }),
+    msgUpdateObject: (data: MsgUpdateObject): EncodeObject => ({ typeUrl: "/deepstack.auction.auction.MsgUpdateObject", value: MsgUpdateObject.fromPartial( data ) }),
     
   };
 };

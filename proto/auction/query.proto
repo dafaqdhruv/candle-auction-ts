@@ -5,6 +5,7 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "auction/params.proto";
+import "auction/object.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/deepstack/auction/x/auction/types";
@@ -15,7 +16,17 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/deepstack/auction/auction/params";
   }
-  // this line is used by starport scaffolding # 2
+  // Queries a Object by id.
+	rpc Object(QueryGetObjectRequest) returns (QueryGetObjectResponse) {
+		option (google.api.http).get = "/deepstack/auction/auction/object/{id}";
+	}
+
+	// Queries a list of Object items.
+	rpc ObjectAll(QueryAllObjectRequest) returns (QueryAllObjectResponse) {
+		option (google.api.http).get = "/deepstack/auction/auction/object";
+	}
+
+// this line is used by starport scaffolding # 2
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -25,6 +36,23 @@ message QueryParamsRequest {}
 message QueryParamsResponse {
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetObjectRequest {
+	uint64 id = 1;
+}
+
+message QueryGetObjectResponse {
+	Object Object = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllObjectRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllObjectResponse {
+	repeated Object Object = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3
